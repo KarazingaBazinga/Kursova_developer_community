@@ -1,0 +1,1 @@
+# Kursova_developer_community
