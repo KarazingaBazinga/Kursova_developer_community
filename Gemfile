@@ -60,6 +60,12 @@ group :development do
   # gem "spring"
 end
 
+gem 'faker'
+gem 'ransack'
+gem 'devise'
+gem 'kaminari'
+gem 'cssbundling-rails'
+
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
