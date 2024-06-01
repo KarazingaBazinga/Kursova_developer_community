@@ -8,32 +8,36 @@ class User < ApplicationRecord
   has_many :connections, dependent: :destroy
 
   PROFILE_TITLE = [
-          'Senior Ruby on Rails Developer',
-          'Full Stack Ruby on Rails Developer',
-          'Senior Full Stack Ruby on Rails Developer',
-          'Junior Full Stack Ruby on Rails Developer',
-          'Senior Java Developer',
-          'Senior Front End Developer'
-        ].freeze
+    'Senior Ruby on Rails Developer',
+    'Full Stack Ruby on Rails Developer',
+    'Senior Full Stack Ruby on Rails Developer',
+    'Junior Full Stack Ruby on Rails Developer',
+    'Senior Java Developer',
+    'Senior Front End Developer'
+  ].freeze
 
-        def name
-          "#{first_name} #{last_name}".strip
-        end
-      
-        def address
-          "#{city}, #{state}, #{country}, #{pincode}"
-        end
-      
-        def self.ransackable_attributes(auth_object = nil)
-          ['country', 'city']
-        end
-      
-        def self.ransackable_associations(auth_object = nil)
-          []
-        end
+  def name
+    "#{first_name} #{last_name}".strip
+  end
 
-  def check_if_already_connected?(current_user, user)
-    current_user != user && !current_user.connections.pluck(:connected_user_id).include?(user.id)
+  def address
+    "#{city}, #{state}, #{country}, #{pincode}"
+  end
+
+  def self.ransackable_attributes(auth_object = nil)
+    ['country', 'city']
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    []
+  end
+
+  def my_connection(user)
+    Connection.where("(user_id = ? AND connected_user_id = ?) OR (user_id = ? AND connected_user_id = ?)", user.id, id, id, user.id)
+  end
+
+  def check_if_already_connected?(user)
+    self != user && !my_connection(user).present?
   end
 
 end
