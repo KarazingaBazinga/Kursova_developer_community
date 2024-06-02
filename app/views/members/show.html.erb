@@ -61,7 +61,6 @@
       <% end %>
     </div>
   </div>
-
   <div class="card mb-5">
     <div class="card-body">
       <% if @user == current_user %>
@@ -79,7 +78,7 @@
               <% end %>
             </div>
           </div>
-            <% if @user.skills.present? %>
+          <% if @user.skills.present? %>
             <div class="col-lg-4">
               <div class="d-flex justify-content-end">
                 <%= link_to "javascript:void(0)" do %>
@@ -88,10 +87,9 @@
                 <% end %>
               </div>
             </div>
-            <% end %>
+          <% end %>
         </div>
       <% end %>
-
       <% if @user.skills.present? %>
         <ul class="list-group" id="skill_items">
           <% @user.skills.each do |skill| %>
@@ -101,5 +99,4 @@
       <% end %>
     </div>
   </div>
-
 </div>

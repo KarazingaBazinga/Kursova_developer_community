@@ -1,6 +1,4 @@
-# frozen_string_literal: true
-
-class AddChatroomToMessages < ActiveRecord::Migration[7.0]
+class AddChatroomToMessages < ActiveRecord::Migration[7.1]
   def change
     add_reference :messages, :chatroom, null: false, foreign_key: true
   end

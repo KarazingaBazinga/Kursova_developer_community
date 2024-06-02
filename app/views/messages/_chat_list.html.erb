@@ -3,9 +3,7 @@
   <% chatroom = Chatroom.between_users(current_user, user).first %>
   <% latest_messages = chatroom.messages.order(created_at: :desc) %>
   <% connected_user_id = user.id == (connection_type == 'requested' ? connection.requested.id : connection.received.id) ? connection.connected_user_id : (connection_type == 'requested' ? connection.requested_id : connection.received_id )%>
-
   <% connected_user = User.where(id: connected_user_id) %>
-
   <% user_id = connection_type == 'requested' ? connection.requested.id : connection.received.id %>
   <% user_name = connection_type == 'requested' ? connection.requested.name : connection.received.name %>
   <% user_first_name = connection_type == 'requested' ? connection.requested.first_name : connection.received.first_name %>
@@ -36,8 +34,8 @@
               <% end %>
             <% end %>
           </p>
-        <% end %> 
-      </div>   
+        <% end %>
+      </div>
     </div>
   </a>
 <% end %>
