@@ -69,8 +69,6 @@ gem 'devise'
 gem 'kaminari'
 gem 'cssbundling-rails'
 
-gem "stimulus_reflex", "= 3.5.0.pre8"
-
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
