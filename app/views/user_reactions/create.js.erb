@@ -1,3 +1,0 @@
-<% if params[:user_reaction][:reactable_type] %>
-  $('.reaction-<%= params[:user_reaction][:reactable_type] %>').html(<%= @post.user_reactions_count(params[:user_reaction][:reactable_type]) %>);
-<% end %>

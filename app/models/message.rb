@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class Message < ApplicationRecord
   belongs_to :user
   belongs_to :chatroom
@@ -7,7 +5,6 @@ class Message < ApplicationRecord
 
   # validation
   validates :message, presence: true
-
   def sent_by?(user)
     self.user == user
   end

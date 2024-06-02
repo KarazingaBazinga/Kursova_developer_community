@@ -55,7 +55,6 @@ message-area
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 15px;
 }
 
 .chat-area .form-control {
@@ -583,13 +582,13 @@ button:focus {
   margin-top: -17px;
 }
 .message-date {
-    font-size: 12px;
-    text-align: center;
-    color: gray;
-    position: relative;
-        color: #212529;
-  }
-  .message-date::before,
+  font-size: 12px;
+  text-align: center;
+  color: gray;
+  position: relative;
+  color: #212529;
+}
+.message-date::before,
 .message-date::after {
   content: "";
   position: absolute;

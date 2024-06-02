@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class EventsController < ApplicationController
   before_action :set_event, only: %i[edit show update destroy]
 
@@ -11,7 +9,8 @@ class EventsController < ApplicationController
     @event = Event.new
   end
 
-  def edit; end
+  def edit
+  end
 
   def create
     @event = current_user.events.build(event_params)
@@ -22,7 +21,8 @@ class EventsController < ApplicationController
     end
   end
 
-  def show; end
+  def show
+  end
 
   def update
     if @event.update(event_params)
@@ -33,18 +33,19 @@ class EventsController < ApplicationController
   end
 
   def destroy
-    return unless @event.destroy
-
-    redirect_to events_path
+    if @event.destroy
+      redirect_to events_path
+    end
   end
 
   def calendar_events
     @events = Event.all
     respond_to do |format|
       format.html
-      format.json { render json: @events.map(&:to_calendar_event) }
+      format.json { render json: @events.map { |event| event.to_calendar_event } }
     end
   end
+
 
   private
 
@@ -53,7 +54,8 @@ class EventsController < ApplicationController
   end
 
   def event_params
-    params.require(:event).permit(:event_type, :event_name, :start_date, :end_date, :start_time, :end_time,
-                                  :description, :user_id, images: [])
+    params.require(:event).permit(:event_type, :event_name, :start_date, :end_date, :start_time, :end_time, :description, :user_id, images:[])
   end
+
+
 end

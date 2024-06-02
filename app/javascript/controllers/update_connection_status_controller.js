@@ -29,7 +29,7 @@ export default class extends Controller {
       },
       body: connectionBody
     })
-    .then(response => response.text())
-    .then(html => Turbo.renderStreamMessage(html))
+        .then(response => response.text())
+        .then(html => Turbo.renderStreamMessage(html))
   }
 }

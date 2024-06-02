@@ -10,6 +10,7 @@ export default class extends Controller {
     this.element.setAttribute('data-action', "click->bs-modal-form#showModal")
   }
 
+
   showModal(event) {
     event.preventDefault()
     this.url = this.element.getAttribute('href')

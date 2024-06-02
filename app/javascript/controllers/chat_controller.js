@@ -3,18 +3,16 @@ import StimulusReflex from 'stimulus_reflex';
 import consumer from '../channels/consumer';
 import {EmojiButton} from '@joeattardi/emoji-button'
 
-
 // Connects to data-controller="chat"
 export default class extends Controller {
   static targets = ['textarea', 'searchInput', 'user'];
-
   connect() {
+
     StimulusReflex.register(this)
     this.debounceTimer = null;
     this.setupFileInput();
     this.setupEmojiPicker();
   }
-
 
   initialize() {
     // Extract the chatroom ID from the dataset of the chat container
@@ -43,7 +41,7 @@ export default class extends Controller {
 
   findUserTarget(userId) {
     return this.userTargets.find((user) =>
-      user.getAttribute("data-user-id") === userId
+        user.getAttribute("data-user-id") === userId
     );
   }
 
@@ -54,7 +52,6 @@ export default class extends Controller {
     fileInputImage.addEventListener('change', this.handleFileSelection.bind(this));
     fileInputAttachment.addEventListener('change', this.handleFileSelection.bind(this));
   }
-
   setupEmojiPicker() {
     this.picker = new EmojiButton();
 
@@ -81,14 +78,15 @@ export default class extends Controller {
   setupSearchInput() {
     const searchInput = this.searchInputTarget;
     const messageArea = document.querySelector('.message-area');
-    
+
     searchInput.addEventListener('input', () => {
 
       clearTimeout(this.debounceTimer);
       this.debounceTimer = setTimeout(() => {
 
         const searchTerm = searchInput.value.toLowerCase().trim();
-        
+
+
         // Placeholder for fetching messages based on searchTerm
         this.fetchMessages(searchTerm).then((filteredMessages) => {
           if(filteredMessages != undefined){
@@ -108,13 +106,13 @@ export default class extends Controller {
               const userName = userNameElement.textContent.toLowerCase().trim();
               const userMessageElement = user.querySelector('.user-last-message');
               const userMessage = userMessageElement != null ? userMessageElement.textContent.toLowerCase().trim() : '';
-              
+
               // Retrieve chatroom from data attribute
               const UserChatroomId = user.dataset.chatroomId;
 
               // Check if the otherUserId is present in resultInMessages
               const otherUserIdFound = resultInMessages.some((result) => result.chatroomId == parseInt(UserChatroomId, 10));
-            
+
               if (userName.includes(searchTerm) || userMessage.includes(searchTerm) || (foundInMessage && otherUserIdFound)) {
                 user.classList.remove('d-none');
               } else {
@@ -137,13 +135,14 @@ export default class extends Controller {
 
       // Filter messages based on searchTerm and return the filtered array
       return allMessages.filter((message) =>
-        message.message.toLowerCase().includes(searchTerm)
+          message.message.toLowerCase().includes(searchTerm)
       );
     } else {
       // Return an empty array if searchTerm is empty
       return [];
     }
   }
+
 
   handleFileSelection(event) {
     const file = event.target.files[0];
@@ -198,5 +197,5 @@ export default class extends Controller {
       }
     }, 200); // Adjust the debounce delay as needed
   }
-}
 
+}

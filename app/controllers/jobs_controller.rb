@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class JobsController < ApplicationController
   before_action :set_jobs, only: %i[edit show update destroy]
 
@@ -10,7 +8,9 @@ class JobsController < ApplicationController
                  .order(created_at: :desc)
                  .page(params[:page])
                  .per(4)
-      flash.now[:alert] = "No jobs available in the #{params[:job_category]} category." if @jobs.empty?
+      if @jobs.empty?
+        flash.now[:alert] = "No jobs available in the #{params[:job_category]} category."
+      end
     else
       @jobs = Job.includes(:job_category).order(created_at: :desc).page(params[:page]).per(4)
     end
@@ -18,21 +18,21 @@ class JobsController < ApplicationController
 
   def new
     @job = Job.new
-    @pages = Page.all
   end
 
   def create
     @job = current_user.jobs.build(job_params)
-    return unless @job.save
-
-    redirect_to jobs_path
+    if @job.save
+      redirect_to jobs_path
+    end
   end
 
   def edit
-    @pages = Page.all
+
   end
 
-  def show; end
+  def show
+  end
 
   def update
     if @job.update(job_params)
@@ -43,9 +43,9 @@ class JobsController < ApplicationController
   end
 
   def destroy
-    return unless @job.destroy
-
-    redirect_to jobs_path
+    if @job.destroy
+      redirect_to jobs_path
+    end
   end
 
   private
@@ -55,7 +55,7 @@ class JobsController < ApplicationController
   end
 
   def job_params
-    params.require(:job).permit(:title, :employee_type, :location, :salary, :description, :qualification, :status,
-                                :job_category_id, :user_id, :page_id)
+    params.require(:job).permit(:title, :employee_type, :location, :salary, :description, :qualification, :status, :job_category_id, :user_id)
   end
+
 end
