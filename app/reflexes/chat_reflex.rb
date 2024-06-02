@@ -25,7 +25,7 @@ class ChatReflex < StimulusReflex::Reflex
           </p>
         </div>
       </small>
-      <p class='timestamp' data-user-id='#{data['otherUserId']}'>
+      <p class='timestamp mt-0 mx-3' data-user-id='#{data['otherUserId']}'>
         #{message.created_at.strftime('%I:%M %p')}
       </p>"
     end
