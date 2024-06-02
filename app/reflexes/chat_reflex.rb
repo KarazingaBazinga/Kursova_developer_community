@@ -20,7 +20,6 @@ class ChatReflex < StimulusReflex::Reflex
       ActionCable.server.broadcast("chat_#{chatroom.id}", message.message)
 
 
-      update_messages(other_user)
     end
   end
 
