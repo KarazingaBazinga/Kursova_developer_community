@@ -14,6 +14,22 @@ export default class extends Controller {
     this.setupEmojiPicker();
   }
 
+  initialize() {
+    // Extract the chatroom ID from the dataset of the chat container
+    const chatroomId = this.element.dataset.chatroomId;
+
+    consumer.subscriptions.create({ channel: "ChatChannel", room: `chat_${chatroomId}` }, {
+      received: this._cableReceived.bind(this),
+    });
+  }
+
+  open_chat(event) {
+    event.preventDefault();
+    const userId = event.target.getAttribute("data-user-id");
+
+    this.stimulate("Chat#open_chat", userId);
+  }
+
   setupFileInput() {
     const fileInput = this.element.querySelector("#message_image");
 
@@ -42,65 +58,72 @@ export default class extends Controller {
     this.picker.togglePicker(event.target)
   }
 
-  // Add a new function to handle search input
   setupSearchInput() {
     const searchInput = this.searchInputTarget;
     const messageArea = document.querySelector('.message-area');
 
     searchInput.addEventListener('input', () => {
-      const searchTerm = searchInput.value.toLowerCase().trim();
-      const chatroomMessages = messageArea.querySelector('.chatroom-messages');
-      const messages = Array.from(chatroomMessages.querySelectorAll('.message'));
 
-      const resultInMessages = messages.map((message) => {
-        const messageText = message.textContent.toLowerCase();
-        const otherUserId = message.dataset.otherUserId;
-        return {
-          foundInMessages: messageText.includes(searchTerm),
-          otherUserId: otherUserId,
-        };
-      });
+      clearTimeout(this.debounceTimer);
+      this.debounceTimer = setTimeout(() => {
 
-      const foundInMessages = resultInMessages.some((result) => result.foundInMessages);
+        const searchTerm = searchInput.value.toLowerCase().trim();
 
-      this.userTargets.forEach((user) => {
-        const userNameElement = user.querySelector('.user-name');
-        const userName = userNameElement.textContent.toLowerCase().trim();
-        const userMessageElement = user.querySelector('.user-last-message');
-        const userMessage = userMessageElement != null ? userMessageElement.textContent.toLowerCase().trim() : '';
 
-        // Retrieve otherUserId from data attribute
-        const otherUserChatroom = user.dataset.userId;
+        // Placeholder for fetching messages based on searchTerm
+        this.fetchMessages(searchTerm).then((filteredMessages) => {
+          if(filteredMessages != undefined){
+            const resultInMessages = filteredMessages.map((message) => {
+              const messageText = message.message.toLowerCase();
+              const chatroomId = message.chatroom_id;
+              return {
+                foundInMessages: messageText.includes(searchTerm),
+                chatroomId: chatroomId
+              };
+            });
 
-        // Check if the otherUserId is present in resultInMessages
-        const otherUserIdFound = resultInMessages.some((result) => result.otherUserId === otherUserChatroom);
+            const foundInMessage = resultInMessages.some((result) => result.foundInMessages);
 
-        if (userName.includes(searchTerm) || userMessage.includes(searchTerm) || (foundInMessages && otherUserIdFound)) {
-          user.classList.remove('d-none');
-        } else {
-          user.classList.add('d-none');
-        }
+            this.userTargets.forEach((user) => {
+              const userNameElement = user.querySelector('.user-name');
+              const userName = userNameElement.textContent.toLowerCase().trim();
+              const userMessageElement = user.querySelector('.user-last-message');
+              const userMessage = userMessageElement != null ? userMessageElement.textContent.toLowerCase().trim() : '';
 
-        // You can use otherUserId as needed here
-        // console.log('OtherUserId:', otherUserId);
-      });
+              // Retrieve chatroom from data attribute
+              const UserChatroomId = user.dataset.chatroomId;
+
+              // Check if the otherUserId is present in resultInMessages
+              const otherUserIdFound = resultInMessages.some((result) => result.chatroomId == parseInt(UserChatroomId, 10));
+
+              if (userName.includes(searchTerm) || userMessage.includes(searchTerm) || (foundInMessage && otherUserIdFound)) {
+                user.classList.remove('d-none');
+              } else {
+                user.classList.add('d-none');
+              }
+            });
+          }else{
+            this.userTargets.forEach((element) => element.classList.remove('d-none'));
+          }
+        });
+      }, 500);
     });
   }
 
-  initialize() {
-    // Extract the chatroom ID from the dataset of the chat container
-    const chatroomId = this.element.dataset.chatroomId;
+  // Placeholder for fetching messages based on searchTerm
+  async fetchMessages(searchTerm) {
+    if (searchTerm.length > 0) {
+      const response = await fetch('/all_messages');
+      const allMessages = await response.json();
 
-    consumer.subscriptions.create({ channel: "ChatChannel", room: `chat_${chatroomId}` }, {
-      received: this._cableReceived.bind(this),
-    });
-  }
-
-  open_chat(event) {
-    event.preventDefault();
-    const userId = event.target.getAttribute("data-user-id");
-
-    this.stimulate("Chat#open_chat", userId);
+      // Filter messages based on searchTerm and return the filtered array
+      return allMessages.filter((message) =>
+          message.message.toLowerCase().includes(searchTerm)
+      );
+    } else {
+      // Return an empty array if searchTerm is empty
+      return [];
+    }
   }
 
 
