@@ -9,13 +9,14 @@ class MessagesController < ApplicationController
         MAX(messages.created_at) AS most_recent_message_time
       FROM
         chatrooms
-      LEFT JOIN messages ON chatrooms.id = messages.chatroom_id
+      LEFT JOIN
+        messages ON chatrooms.id = messages.chatroom_id
       WHERE
-        (chatrooms.user1_id = :user_id OR chatrooms.user2_id = :user_id)
+        chatrooms.user1_id = :user_id OR chatrooms.user2_id = :user_id
       GROUP BY
         chatrooms.id
       ORDER BY
-        most_recent_message_time DESC NULLS LAST
+        most_recent_message_time DESC
       LIMIT
         1
     SQL
@@ -26,7 +27,7 @@ class MessagesController < ApplicationController
 
     if result
       @chatroom = Chatroom.find(result['id'])
-      @messages = @chatroom.messages.includes(:user, cover_image_attachment: :blob).order(created_at: :asc)
+      @messages = @chatroom.messages.includes(:user).order(created_at: :asc)
       @user = @chatroom.user1_id == current_user.id ? @chatroom.user2 : @chatroom.user1
     else
       @chatroom = nil
