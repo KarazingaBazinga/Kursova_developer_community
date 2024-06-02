@@ -1,0 +1,119 @@
+uk:
+  devise:
+    sessions:
+      new:
+        login: "Вхід"
+        log_in: "Увійти"
+    registrations:
+      new:
+        sign_up: "Реєстрація"
+        characters_minimum: "мінімум символів"
+      edit:
+        edit: "Редагувати"
+        currently_waiting_confirmation: "Очікується підтвердження для"
+        leave_blank: "залиште порожнім, якщо не хочете змінювати"
+        characters_minimum: "мінімум символів"
+        current_password_needed: "нам потрібен ваш поточний пароль для підтвердження змін"
+        update: "Оновити"
+        cancel_my_account: "Видалити мій обліковий запис"
+        unhappy: "Незадоволені"
+        are_you_sure: "Ви впевнені?"
+        back: "Назад"
+    passwords:
+      new:
+        forgot_your_password: "Забули пароль?"
+        send_me_reset_password_instructions: "Надіслати інструкції з відновлення пароля"
+      edit:
+        change_your_password: "Змінити пароль"
+        new_password: "Новий пароль"
+        characters_minimum: "мінімум символів"
+        confirm_new_password: "Підтвердьте новий пароль"
+        change_my_password: "Змінити мій пароль"
+    mailer:
+      confirmation_instructions:
+        welcome: "Ласкаво просимо %{email}"
+        you_can_confirm: "Ви можете підтвердити свою електронну адресу через посилання нижче"
+        confirm_my_account: "Підтвердити мій обліковий запис"
+      email_changed:
+        hello: "Привіт %{email}"
+        email_being_changed: "Ми повідомляємо вас, що ваша електронна адреса змінюється на %{new_email}."
+        email_has_been_changed: "Ми повідомляємо вас, що ваша електронна адреса змінена на %{email}."
+      password_change:
+        hello: "Привіт %{email}"
+        password_changed_notification: "Ми повідомляємо вас, що ваш пароль було змінено."
+      reset_password_instructions:
+        hello: "Привіт %{email}"
+        request_link: "Хтось запросив посилання для зміни вашого пароля. Ви можете зробити це через посилання нижче"
+        change_my_password: "Змінити мій пароль"
+        ignore_email: "Якщо ви не запитували це, просто ігноруйте цей лист."
+        no_password_change: "Ваш пароль не зміниться, поки ви не перейдете за посиланням вище і не створите новий."
+      unlock_instructions:
+        hello: "Привіт %{email}"
+        account_locked: "Ваш обліковий запис було заблоковано через надмірну кількість невдалих спроб входу."
+        click_to_unlock: "Натисніть посилання нижче, щоб розблокувати ваш обліковий запис"
+        unlock_my_account: "Розблокувати мій обліковий запис"
+    confirmations:
+      new:
+        resend_confirmation_instructions: "Відправити інструкції підтвердження повторно"
+  connections:
+    create:
+      pending: "Очікується"
+      pending_message: "Ваш запит на підключення було відправлено, але він знаходиться в стані очікування. Ви будете підключені, як тільки %{name} прийме ваш запит на підключення."
+    update:
+      accepted: "Прийнято"
+      rejected: "Відхилено"
+      pending: "Очікується"
+  members:
+    show:
+      about: "Про себе"
+      work_experiences: "Досвід роботи"
+      add_experience: "Додати досвід"
+      edit_experiences: "Редагувати досвід"
+    connections:
+      about: "Про"
+      result: "результат"
+      mutual_connection: "спільний зв'язок"
+    personal_info_modal:
+      save_changes: "Зберегти зміни"
+      close: "Закрити"
+    personal_details:
+      connect: "З'єднатися"
+      connected: "З'єднано"
+      rejected: "Відхилено"
+      connection: "зв'язок"
+      mutual_connection: "спільний зв'язок"
+    description_modal:
+      edit_your_description: "Редагуйте свій опис тут. Намагайтеся робити його простим і конкретним, щоб інші могли знайти цінні деталі про вас."
+      save_changes: "Зберегти зміни"
+      close: "Закрити"
+  home:
+    index:
+      search_professionals: "Шукайте професіоналів по всьому світу!"
+      search_placeholder: "Шукати за країною або містом"
+      search: "Шукати"
+      view_profile: "Переглянути профіль"
+  connections:
+    index:
+      requested_connections: "Запитані зв'язки"
+      received_connections: "Отримані зв'язки"
+      accept: "Прийняти"
+      reject: "Відхилити"
+  footer:
+    company: "Компанія"
+    features: "Особливості"
+    about_us: "Про нас"
+    contact_us: "Контакти"
+    our_mission: "Наша місія"
+    resources: "Ресурси"
+    blogs: "Блоги"
+    careers: "Кар'єри"
+    profiles: "Профілі"
+  app_name: "Dev Community"
+  navigation:
+    my_profile: "Мій Профіль"
+    my_network: "Моя Мережа"
+    sign_out: "Вийти"
+    confirm_sign_out: "Ви впевнені, що хочете вийти?"
+    sign_in: "Увійти"
+    english: "English"
+    ukrainian: "Українська"

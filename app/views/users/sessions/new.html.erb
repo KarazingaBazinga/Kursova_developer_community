@@ -1,7 +1,7 @@
 <div class="col-lg-6 mx-auto mt-5 mb-5">
   <div class="card">
     <div class="card-header">
-      <h2 class="text-center card-title">Login</h2>
+      <h2 class="text-center card-title"><%= t('devise.sessions.new.login') %></h2>
     </div>
     <div class="card-body">
       <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { data: {turbo: false} }) do |f| %>
@@ -23,7 +23,7 @@
         <% end %>
 
         <div class="actions mt-3">
-          <%= f.submit "Log in", class: "btn btn-primary" %>
+          <%= f.submit t('devise.sessions.new.log_in'), class: "btn btn-primary" %>
         </div>
       <% end %>
       <%= render "users/shared/links" %>

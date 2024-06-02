@@ -1,12 +1,11 @@
 <div class="col-lg-10 mx-auto mt-5">
-
   <div class="card mt-4 mb-4">
     <div class="card-body">
-      <h3 class="text-center mb-3">Search professionals accross the world!</h3>
+      <h3 class="text-center mb-3"><%= t('home.index.search_professionals') %></h3>
       <%= search_form_for @q, url: root_path do |form| %>
         <div class="input-group mb-3">
-          <%= form.search_field :city_or_country_cont, class: "form-control", placeholder: "Search by country or city", area: { label: "Search by country or city", describedby: "button-addon2" } %>
-          <%= form.submit "Search", class: "btn btn-primary", id: "button-addon2" %>
+          <%= form.search_field :city_or_country_cont, class: "form-control", placeholder: t('home.index.search_placeholder'), area: { label: t('home.index.search_placeholder'), describedby: "button-addon2" } %>
+          <%= form.submit t('home.index.search'), class: "btn btn-primary", id: "button-addon2" %>
         </div>
       <% end %>
     </div>
@@ -19,11 +18,11 @@
           <div class="card-body">
             <%= image_tag "dmu1.jpeg", style: "width: 150px; border-radius: 50%; border: 2px solid #0d6efd;", class: 'mb-3' %>
             <div class="user-info" data-controller="user-name">
-            <h5 data-user-name-target='name' data-action="click->user-name#getUserName"><%= user.name %></h5>
+              <h5 data-user-name-target='name' data-action="click->user-name#getUserName"><%= user.name %></h5>
               <p class="lead"><%= user.profile_title %></p>
               <small class="text-primary"><%= user.country %></small><br>
 
-              <%= link_to "View Profile", member_path(user), class: "btn btn-primary mt-3" %>
+              <%= link_to t('home.index.view_profile'), member_path(user), class: "btn btn-primary mt-3" %>
             </div>
           </div>
         </div>

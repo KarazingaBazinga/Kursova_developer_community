@@ -1,31 +1,119 @@
-# Files in the config/locales directory are used for internationalization and
-# are automatically loaded by Rails. If you want to use locales other than
-# English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t "hello"
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t("hello") %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# To learn more about the API, please read the Rails Internationalization guide
-# at https://guides.rubyonrails.org/i18n.html.
-#
-# Be aware that YAML interprets the following case-insensitive strings as
-# booleans: `true`, `false`, `on`, `off`, `yes`, `no`. Therefore, these strings
-# must be quoted to be interpreted as strings. For example:
-#
-#     en:
-#       "yes": yup
-#       enabled: "ON"
-
 en:
-  hello: "Hello world"
+  devise:
+    sessions:
+      new:
+        login: "Login"
+        log_in: "Log in"
+    registrations:
+      new:
+        sign_up: "Sign up"
+        characters_minimum: "characters minimum"
+      edit:
+        edit: "Edit"
+        currently_waiting_confirmation: "Currently waiting confirmation for"
+        leave_blank: "leave blank if you don't want to change it"
+        characters_minimum: "characters minimum"
+        current_password_needed: "we need your current password to confirm your changes"
+        update: "Update"
+        cancel_my_account: "Cancel my account"
+        unhappy: "Unhappy"
+        are_you_sure: "Are you sure?"
+        back: "Back"
+    passwords:
+      new:
+        forgot_your_password: "Forgot your password?"
+        send_me_reset_password_instructions: "Send me reset password instructions"
+      edit:
+        change_your_password: "Change your password"
+        new_password: "New password"
+        characters_minimum: "characters minimum"
+        confirm_new_password: "Confirm new password"
+        change_my_password: "Change my password"
+    mailer:
+      confirmation_instructions:
+        welcome: "Welcome %{email}"
+        you_can_confirm: "You can confirm your account email through the link below"
+        confirm_my_account: "Confirm my account"
+      email_changed:
+        hello: "Hello %{email}"
+        email_being_changed: "We're contacting you to notify you that your email is being changed to %{new_email}."
+        email_has_been_changed: "We're contacting you to notify you that your email has been changed to %{email}."
+      password_change:
+        hello: "Hello %{email}"
+        password_changed_notification: "We're contacting you to notify you that your password has been changed."
+      reset_password_instructions:
+        hello: "Hello %{email}"
+        request_link: "Someone has requested a link to change your password. You can do this through the link below"
+        change_my_password: "Change my password"
+        ignore_email: "If you didn't request this, please ignore this email."
+        no_password_change: "Your password won't change until you access the link above and create a new one."
+      unlock_instructions:
+        hello: "Hello %{email}"
+        account_locked: "Your account has been locked due to an excessive number of unsuccessful sign in attempts."
+        click_to_unlock: "Click the link below to unlock your account"
+        unlock_my_account: "Unlock my account"
+    confirmations:
+      new:
+        resend_confirmation_instructions: "Resend confirmation instructions"
+  connections:
+    create:
+      pending: "Pending"
+      pending_message: "Your connection request has been sent, but it is in pending state. You will get connected once %{name} accepts your connection request."
+    update:
+      accepted: "Accepted"
+      rejected: "Rejected"
+      pending: "Pending"
+  members:
+    show:
+      about: "About"
+      work_experiences: "Work Experiences"
+      add_experience: "Add Experience"
+      edit_experiences: "Edit Experiences"
+    connections:
+      about: "About"
+      result: "result"
+      mutual_connection: "mutual connection"
+    personal_info_modal:
+      save_changes: "Save Changes"
+      close: "Close"
+    personal_details:
+      connect: "Connect"
+      connected: "Connected"
+      rejected: "Rejected"
+      connection: "connection"
+      mutual_connection: "mutual connection"
+    description_modal:
+      edit_your_description: "Edit your description here. Try to keep it simple and to the point so the others can find valuable details of yours."
+      save_changes: "Save Changes"
+      close: "Close"
+  home:
+    index:
+      search_professionals: "Search professionals accross the world!"
+      search_placeholder: "Search by country or city"
+      search: "Search"
+      view_profile: "View Profile"
+  connections:
+    index:
+      requested_connections: "Requested Connections"
+      received_connections: "Received Connections"
+      accept: "Accept"
+      reject: "Reject"
+  footer:
+    company: "Company"
+    features: "Features"
+    about_us: "About Us"
+    contact_us: "Contact Us"
+    our_mission: "Our Mission"
+    resources: "Resources"
+    blogs: "Blogs"
+    careers: "Careers"
+    profiles: "Profiles"
+  app_name: "Dev Community"
+  navigation:
+    my_profile: "My Profile"
+    my_network: "My Network"
+    sign_out: "Sign Out"
+    confirm_sign_out: "Are you sure you want to sign out?"
+    sign_in: "Sign In"
+    english: "English"
+    ukrainian: "Українська"
