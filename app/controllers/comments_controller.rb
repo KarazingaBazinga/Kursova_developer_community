@@ -1,8 +1,6 @@
-# frozen_string_literal: true
-
 class CommentsController < ApplicationController
   before_action :set_comments, only: %i[edit destroy]
-  before_action :find_commentable, only: %i[create destroy new edit update]
+  before_action :find_commentable, only: [:create, :destroy, :new, :edit, :update, :show]
 
   def create
     @comment = @commentable.comments.new(comment_params)
@@ -19,7 +17,8 @@ class CommentsController < ApplicationController
     redirect_to @commentable, notice: 'Comment was successfully deleted.'
   end
 
-  def edit; end
+  def edit
+  end
 
   def update
     @comment = @commentable.comments.find(params[:id])
@@ -32,14 +31,21 @@ class CommentsController < ApplicationController
     end
   end
 
+  def show
+    @comment = @post.comments.build
+    render :edit
+  end
+
   private
 
   def find_commentable
-    @commentable = Post.find(params[:post_id]) if params[:post_id]
+    if params[:post_id]
+      @commentable = Post.find(params[:post_id])
+    end
 
-    return unless @commentable.nil?
-
-    redirect_back fallback_location: root_path, alert: 'Commentable not found'
+    if @commentable.nil?
+      redirect_back fallback_location: root_path, alert: 'Commentable not found'
+    end
   end
 
   def set_comments
