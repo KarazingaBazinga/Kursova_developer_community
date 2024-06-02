@@ -23,7 +23,6 @@ class ConnectionsController < ApplicationController
     ActiveRecord::Base.transaction do
       if @connection.update(connection_params)
         if @connection.status == 'accepted'
-          chatroom = Chatroom.create(user1: @connection.requested, user2: @connection.received)
           receiver = @connection.received
           receiver.connected_user_ids << @connection.requested.id
           receiver.save
