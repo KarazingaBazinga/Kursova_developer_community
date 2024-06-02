@@ -5,7 +5,7 @@ import {EmojiButton} from '@joeattardi/emoji-button'
 
 // Connects to data-controller="chat"
 export default class extends Controller {
-  static targets = ['textarea', 'searchInput', 'user'];
+  static targets = ['textarea'];
   connect() {
 
     StimulusReflex.register(this)
@@ -40,51 +40,6 @@ export default class extends Controller {
   showPicker(event) {
     event.preventDefault()
     this.picker.togglePicker(event.target)
-  }
-
-  // Add a new function to handle search input
-  setupSearchInput() {
-    const searchInput = this.searchInputTarget;
-    const messageArea = document.querySelector('.message-area');
-
-    searchInput.addEventListener('input', () => {
-      const searchTerm = searchInput.value.toLowerCase().trim();
-      const chatroomMessages = messageArea.querySelector('.chatroom-messages');
-      const messages = Array.from(chatroomMessages.querySelectorAll('.message'));
-
-      const resultInMessages = messages.map((message) => {
-        const messageText = message.textContent.toLowerCase();
-        const otherUserId = message.dataset.otherUserId;
-        return {
-          foundInMessages: messageText.includes(searchTerm),
-          otherUserId: otherUserId,
-        };
-      });
-
-      const foundInMessages = resultInMessages.some((result) => result.foundInMessages);
-
-      this.userTargets.forEach((user) => {
-        const userNameElement = user.querySelector('.user-name');
-        const userName = userNameElement.textContent.toLowerCase().trim();
-        const userMessageElement = user.querySelector('.user-last-message');
-        const userMessage = userMessageElement != null ? userMessageElement.textContent.toLowerCase().trim() : '';
-
-        // Retrieve otherUserId from data attribute
-        const otherUserChatroom = user.dataset.userId;
-
-        // Check if the otherUserId is present in resultInMessages
-        const otherUserIdFound = resultInMessages.some((result) => result.otherUserId === otherUserChatroom);
-
-        if (userName.includes(searchTerm) || userMessage.includes(searchTerm) || (foundInMessages && otherUserIdFound)) {
-          user.classList.remove('d-none');
-        } else {
-          user.classList.add('d-none');
-        }
-
-        // You can use otherUserId as needed here
-        // console.log('OtherUserId:', otherUserId);
-      });
-    });
   }
 
   initialize() {
