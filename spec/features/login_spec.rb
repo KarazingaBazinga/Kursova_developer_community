@@ -1,21 +1,11 @@
 require 'rails_helper'
 
 RSpec.feature "Logins", type: :feature do
-  describe 'login' do
-    it 'should login user with username' do
-      user = User.create(
-               email: 'user@example.com',
-               password: 'password',
-               username: 'example_user',
-               first_name: 'Example',
-               last_name: 'User',
-               profile_title: 'Senior ruby on rails developer',
-               confirmed_at: DateTime.now
-             )
+  shared_examples 'a successful login' do |login_field|
+    let(:user) { create(:user) }
+         visit root_path
 
-      visit root_path
-
-      fill_in 'user_login', with: user.username
+      fill_in 'user_login', with: user.send(login_field)
       fill_in 'user_password', with: user.password
 
       click_button 'Log in'
@@ -53,5 +43,9 @@ RSpec.feature "Logins", type: :feature do
       expect(page).to have_text(user.name)
       expect(page).to have_text(user.profile_title)
     end
+  end
+  describe 'login' do
+    include_examples 'a successful login', :username
+    include_examples 'a successful login', :email
   end
 end
