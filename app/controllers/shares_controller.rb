@@ -1,8 +1,8 @@
-class SharesController < ApplicationController
+# frozen_string_literal: true
 
+class SharesController < ApplicationController
   def index
-    share_post_ids = current_user.shared_posts.map(&:id)
-    @shared_posts = Post.preload(:post_visits, :user).where(id: share_post_ids)
+    @shared_posts = Post.includes(:user).where(id: current_user.shared_posts.map(&:id))
   end
 
   def new
@@ -28,5 +28,4 @@ class SharesController < ApplicationController
   def share_params
     params.require(:share).permit(:recipient_id, :post_id)
   end
-
 end

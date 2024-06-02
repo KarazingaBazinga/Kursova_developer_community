@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class WorkExperiencesController < ApplicationController
   before_action :set_work_experience, only: %i[edit update destroy]
 
@@ -65,6 +67,7 @@ class WorkExperiencesController < ApplicationController
   end
 
   def work_experience_params
-    params.require(:work_experience).permit(:start_date, :end_date, :currently_working_here, :company, :employment_type, :location, :location_type, :description, :user_id, :job_title)
+    params.require(:work_experience).permit(:start_date, :end_date, :currently_working_here, :company,
+                                            :employment_type, :location, :location_type, :description, :user_id, :job_title)
   end
 end

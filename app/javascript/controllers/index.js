@@ -1,5 +1,4 @@
 // Import and register all your controllers from the importmap under controllers/*
-
 import StimulusReflex from "stimulus_reflex"; // <-- add this
 import { application } from "controllers/application"
 import { cable } from "@hotwired/turbo-rails"; // <-- add this
