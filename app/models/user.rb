@@ -2,17 +2,8 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable, :trackable, :confirmable, authentication_keys: [:login]
+         :recoverable, :rememberable, :validatable, :trackable, :confirmable, :omniauthable, omniauth_providers: [:google_oauth2]
 
-  has_many :work_experiences, dependent: :destroy
-  has_many :connections, dependent: :destroy
-  has_many :messages
-  has_many :user1_chatrooms, class_name: 'Chatroom', foreign_key: 'user1_id', dependent: :destroy
-  has_many :user2_chatrooms, class_name: 'Chatroom', foreign_key: 'user2_id', dependent: :destroy
-  has_many :skills
-
-  validates :first_name, :last_name, :profile_title, presence: true
-  validates :username, presence: true, uniqueness: true
 
   PROFILE_TITLE = [
     'Senior Ruby on Rails Developer',
@@ -23,20 +14,18 @@ class User < ApplicationRecord
     'Senior Front End Developer'
   ].freeze
 
-  attr_writer :login
+  attr_accessor :otp_token
+  has_one_attached :image
 
-  def login
-    @login || username || email
-  end
+  has_many :work_experiences, dependent: :destroy
+  has_many :connections, dependent: :destroy
+  has_many :messages
+  has_many :user1_chatrooms, class_name: 'Chatroom', foreign_key: 'user1_id', dependent: :destroy
+  has_many :user2_chatrooms, class_name: 'Chatroom', foreign_key: 'user2_id', dependent: :destroy
+  has_many :skills
 
-  def self.find_for_database_authentication(warden_conditions)
-    conditions = warden_conditions.dup
-    if(login = conditions.delete(:login))
-      where(conditions.to_h).where(["lower(username) = :value OR lower(email) = :value", { value: login.downcase }]).first
-    elsif conditions.has_key?(:username) || conditions.has_key?(:email)
-      where(conditions.to_h).first
-    end
-  end
+  validates :first_name, :last_name, :profile_title, presence: true
+  validates :username, presence: true, uniqueness: true
 
   def name
     "#{first_name} #{last_name}".strip
@@ -66,5 +55,34 @@ class User < ApplicationRecord
   def mutually_connected_ids(user)
     self.connected_user_ids.intersection(user.connected_user_ids)
   end
+  def generate_and_save_otp
+    self.otp = SecureRandom.random_number(100000..999999).to_s.rjust(6, '0')
+    generate_and_save_otp_token # Generate and save the OTP token
+    save
+  end
 
+  def generate_and_save_otp_token
+    self.otp_token = SecureRandom.hex(16)
+  end
+
+  def valid_otp?(otp)
+    self.otp == otp
+  end
+
+  # omniauth login using google
+  def self.from_omniauth(access_token)
+    data = access_token.info
+    user = User.where(email: data['email']).first
+    unless user
+      user = User.create(
+        email: data['email'],
+        password: 'password',
+        first_name: data['first_name'],
+        last_name: data['last_name'],
+        username: data['name'],
+        profile_title: data['name']
+      )
+    end
+    user
+  end
 end

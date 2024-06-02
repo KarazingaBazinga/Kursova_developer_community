@@ -70,6 +70,9 @@ gem 'kaminari'
 gem 'cssbundling-rails'
 
 gem "stimulus_reflex", "= 3.5.0.pre8"
+gem 'omniauth'
+gem 'omniauth-google-oauth2'
+gem 'omniauth-rails_csrf_protection', '~> 1.0'
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
